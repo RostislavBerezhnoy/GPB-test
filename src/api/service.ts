@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
 import { preparedBaseQuery } from 'utils/preparedBaseQuery'
-import { ServiceDto } from 'types/api'
+import { ServiceDto, ServiceDtoWithContent } from 'types/api'
 
 export const SERVICE_TYPE = 'SERVICE_TYPE'
 
@@ -15,7 +15,7 @@ export const ServiceQueries = createApi({
         method: 'GET',
       }),
     }),
-    getServiceById: build.query<ServiceDto, string>({
+    getServiceById: build.query<ServiceDtoWithContent, string>({
       query: id => ({
         url: `/services/${id}`,
         method: 'GET',

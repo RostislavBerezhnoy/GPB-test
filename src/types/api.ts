@@ -3,3 +3,7 @@ export type ServiceDto = {
   name: string
   price: number
 }
+
+export type ServiceDtoWithContent = ServiceDto & {
+  content: string
+}
