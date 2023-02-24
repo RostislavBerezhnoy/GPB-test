@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from 'store'
 import App from './App'
 import 'antd/dist/reset.css'
+import 'dayjs/locale/ru' // eslint-disable-line import/no-extraneous-dependencies
 import './index.css'
 
 const root = ReactDOM.createRoot(document.querySelector('#root') as HTMLElement)

@@ -15,7 +15,7 @@ export const Test2Card = () => {
   const { useGetServiceByIdQuery } = ServiceQueries
 
   const {
-    data: service,
+    data: service = {},
     isLoading: isServiceLoading,
     isError: isServiceError,
     refetch: refetchService,
