@@ -15,5 +15,11 @@ export const ServiceQueries = createApi({
         method: 'GET',
       }),
     }),
+    getServiceById: build.query<ServiceDto, string>({
+      query: id => ({
+        url: `/services/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 })

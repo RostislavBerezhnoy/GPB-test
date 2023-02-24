@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# GPB-Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Моя реализация [тестового задания](https://github.com/GPB-COS/test-work-react).
 
 ## Available Scripts
 

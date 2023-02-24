@@ -215,7 +215,6 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
         'unicorn/prefer-module': 'warn',
-        '@next/next/no-img-element': 'off',
       },
     },
     {

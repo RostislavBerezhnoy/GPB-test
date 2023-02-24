@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { ServiceQueries } from 'api'
 import { Table } from 'antd'
-import { Box } from 'components/Box'
+import { WrappedBox } from 'components/Box'
 import { Loader } from 'components/Loader'
 import { errorToastWithButton } from 'utils/errorToastWithButton'
 import { columns } from './helpers'
@@ -22,9 +22,9 @@ export const Test2 = () => {
 
   if (isServicesLoading)
     return (
-      <Box alignItems='center' justifyContent='center' padding={100}>
+      <WrappedBox>
         <Loader />
-      </Box>
+      </WrappedBox>
     )
 
   return <Table columns={columns} dataSource={services} rowKey={record => record.id} />
