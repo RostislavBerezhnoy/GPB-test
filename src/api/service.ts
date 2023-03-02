@@ -1,12 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
-import { preparedBaseQuery } from 'utils/preparedBaseQuery'
+import { preparedBaseQueryFn } from 'utils/preparedBaseQuery'
 import { ServiceDto, ServiceDtoWithContent } from 'types/api'
 
 export const SERVICE_TYPE = 'SERVICE_TYPE'
 
 export const ServiceQueries = createApi({
   reducerPath: SERVICE_TYPE,
-  baseQuery: preparedBaseQuery,
+  baseQuery: preparedBaseQueryFn(),
   tagTypes: [SERVICE_TYPE],
   endpoints: build => ({
     getServiceList: build.query<ServiceDto[], void>({

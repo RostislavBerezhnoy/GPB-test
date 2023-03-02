@@ -8,11 +8,7 @@ export type ServiceDtoWithContent = ServiceDto & {
   content: string
 }
 
-export type CalendarEventsDto = {
-  id: number
-  date: string
-  events: EventDto[]
-}
+export type CreateEventDto = Omit<EventDto, 'id'>
 
 export type EventDto = {
   id: number

@@ -1,10 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CalendarQueries } from 'api'
+import { useModal } from 'hooks/useModal'
 import { Button, Calendar, ConfigProvider } from 'antd'
 import { Box, WrappedBox } from 'components/Box'
 import { Loader } from 'components/Loader'
 import { CellRender } from './components/CellRender'
+import { EventModal } from './components/EventModal'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
 import locale from 'antd/locale/ru_RU'
@@ -13,7 +15,15 @@ import { EventDto } from 'types/api'
 import { dateFormatter } from './utils'
 
 export const Test3 = () => {
+  const {
+    isOpen: isEventModalOpen,
+    closeModal: closeEventModal,
+    openModal: openEventModal,
+  } = useModal()
+
   const navigate = useNavigate()
+  const [calendarMode, setCalendarMode] = useState<'month' | 'year'>('month')
+  const [selectedEvents, setSelectedEvents] = useState<EventDto[]>([])
   const { useGetCalendarEventsListQuery } = CalendarQueries
 
   const {
@@ -28,27 +38,31 @@ export const Test3 = () => {
   }, [isCalendarEventsError, refetchCalendarEvents])
 
   const monthCellRender = (value: Dayjs) => {
-    const mounthEvents: EventDto[] = []
-    const mounthData = calendarEvents.filter(
-      ({ date }) => new Date(date).getMonth() === value.month(),
+    const mounthEvents = calendarEvents.filter(
+      ({ start_date }) => dayjs(start_date, 'YYYY-MM-DD').month() === value.month(),
     )
-    mounthData.forEach(({ events }) => mounthEvents.push(...events))
 
     if (mounthEvents.length !== 0) return <CellRender events={mounthEvents} />
   }
 
-  const dateCellRender = (value: Dayjs) => {
-    const currentCellDate = dateFormatter(value)
-    const dayData = calendarEvents.find(({ date }) => date === currentCellDate)?.events || []
+  const getEventsListByDate = (date: Dayjs): EventDto[] => {
+    const currentCellDate = dateFormatter(date)
 
-    return <CellRender events={dayData} />
+    return calendarEvents.filter(({ start_date }) => start_date.includes(currentCellDate))
   }
 
-  const pushHendler = (value: Dayjs) => {
-    const calendarDate = dateFormatter(value)
-    const event = calendarEvents.find(({ date }) => date === calendarDate)
+  const dateCellRender = (value: Dayjs) => {
+    const events = getEventsListByDate(value)
 
-    if (event) navigate(`/test3/${event.id}`)
+    return <CellRender events={events} />
+  }
+
+  const eventshHendler = (value: Dayjs) => {
+    if (calendarMode === 'month') {
+      const events = getEventsListByDate(value)
+      setSelectedEvents(() => events)
+      openEventModal()
+    }
   }
 
   if (isCalendarEventsLoading)
@@ -75,9 +89,17 @@ export const Test3 = () => {
           dateCellRender={dateCellRender}
           monthCellRender={monthCellRender}
           defaultValue={dayjs(new Date())}
-          onSelect={pushHendler}
+          onSelect={eventshHendler}
+          onPanelChange={(_, mode) => setCalendarMode(mode)}
         />
       </ConfigProvider>
+      {isEventModalOpen && (
+        <EventModal
+          isOpen={isEventModalOpen}
+          closeModal={closeEventModal}
+          events={selectedEvents}
+        />
+      )}
     </Box>
   )
 }
