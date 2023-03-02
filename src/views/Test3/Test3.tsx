@@ -12,7 +12,9 @@ import type { Dayjs } from 'dayjs'
 import locale from 'antd/locale/ru_RU'
 import { errorToastWithButton } from 'utils/errorToastWithButton'
 import { EventDto } from 'types/api'
+import type { CalendarMode } from 'antd/es/calendar/generateCalendar'
 import { dateFormatter } from './utils'
+import { MONTH_MODE, YEAR_MODE } from './helpers'
 
 export const Test3 = () => {
   const {
@@ -22,7 +24,7 @@ export const Test3 = () => {
   } = useModal()
 
   const navigate = useNavigate()
-  const [calendarMode, setCalendarMode] = useState<'month' | 'year'>('month')
+  const [calendarMode, setCalendarMode] = useState<CalendarMode>(MONTH_MODE)
   const [selectedEvents, setSelectedEvents] = useState<EventDto[]>([])
   const { useGetCalendarEventsListQuery } = CalendarQueries
 
@@ -37,18 +39,21 @@ export const Test3 = () => {
     if (isCalendarEventsError) errorToastWithButton({ retry: () => refetchCalendarEvents() })
   }, [isCalendarEventsError, refetchCalendarEvents])
 
-  const monthCellRender = (value: Dayjs) => {
-    const mounthEvents = calendarEvents.filter(
-      ({ start_date }) => dayjs(start_date, 'YYYY-MM-DD').month() === value.month(),
-    )
-
-    if (mounthEvents.length !== 0) return <CellRender events={mounthEvents} />
-  }
-
   const getEventsListByDate = (date: Dayjs): EventDto[] => {
     const currentCellDate = dateFormatter(date)
 
     return calendarEvents.filter(({ start_date }) => start_date.includes(currentCellDate))
+  }
+
+  const getMounthEventsListByDate = (date: Dayjs): EventDto[] =>
+    calendarEvents.filter(
+      ({ start_date }) => dayjs(start_date, 'YYYY-MM-DD').month() === date.month(),
+    )
+
+  const monthCellRender = (value: Dayjs) => {
+    const events = getMounthEventsListByDate(value)
+
+    if (events.length !== 0) return <CellRender events={events} />
   }
 
   const dateCellRender = (value: Dayjs) => {
@@ -58,8 +63,12 @@ export const Test3 = () => {
   }
 
   const eventshHendler = (value: Dayjs) => {
-    if (calendarMode === 'month') {
+    if (calendarMode === MONTH_MODE) {
       const events = getEventsListByDate(value)
+      setSelectedEvents(() => events)
+      openEventModal()
+    } else if (calendarMode === YEAR_MODE) {
+      const events = getMounthEventsListByDate(value)
       setSelectedEvents(() => events)
       openEventModal()
     }
