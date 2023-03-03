@@ -16,7 +16,7 @@ import { errorToastWithButton } from 'utils/errorToastWithButton'
 import { EventDto } from 'types/api'
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar'
 import { PUSHER_SECRET_KEY } from 'config/pusher'
-import { dateFormatter, timeFormatter } from './utils'
+import { dateFormatter, timeFormatter, validateDateBetweenTwoDates } from './utils'
 import { MONTH_MODE, YEAR_MODE } from './helpers'
 
 export const Test3 = () => {
@@ -45,7 +45,9 @@ export const Test3 = () => {
   const getEventsListByDate = (date: Dayjs): EventDto[] => {
     const currentCellDate = dateFormatter(date)
 
-    return calendarEvents.filter(({ start_date }) => start_date.includes(currentCellDate))
+    return calendarEvents.filter(({ start_date, end_date }) =>
+      validateDateBetweenTwoDates(start_date.slice(0, 10), end_date.slice(0, 10), currentCellDate),
+    )
   }
 
   const getMounthEventsListByDate = (date: Dayjs): EventDto[] =>
