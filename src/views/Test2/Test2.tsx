@@ -27,5 +27,5 @@ export const Test2 = () => {
       </WrappedBox>
     )
 
-  return <Table columns={columns} dataSource={services} rowKey={record => record.id} />
+  return <Table columns={columns} dataSource={services} rowKey={({ id }) => id} />
 }

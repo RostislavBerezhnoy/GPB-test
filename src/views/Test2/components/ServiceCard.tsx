@@ -8,7 +8,7 @@ export type ServiceCardProps = Partial<ServiceDtoWithContent>
 const { Text } = Typography
 
 export const ServiceCard: FC<ServiceCardProps> = ({ name, price, content }) => (
-  <Card title={name} style={{ width: 300 }}>
+  <Card title={name} style={{ width: '100%', maxWidth: 300 }}>
     {content && (
       <Box marginBottom={40}>
         <Text italic>{content}</Text>

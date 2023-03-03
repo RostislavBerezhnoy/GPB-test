@@ -102,7 +102,7 @@ export const EventCard: FC<EventCardProps> = ({ event }) => {
   return (
     <Card
       title={!event ? 'Создание нового события' : 'Редактирование события'}
-      style={{ width: 500 }}
+      style={{ width: '100%', maxWidth: 500 }}
     >
       <Box marginBottom={30}>
         <Box marginBottom={10}>
