@@ -8,7 +8,7 @@ import type { Dayjs } from 'dayjs'
 import { Card, Input, DatePicker, Button, TimePicker } from 'antd'
 import { Box } from 'components/Box'
 import { CreateEventDto, EventDto } from 'types/api'
-import { DATETIME_FORMAT, defaultDateRangeValue, validationSchema } from '../helpers'
+import { DATETIME_FORMAT, defaultDateRangeValue, EMPTY_TYME, validationSchema } from '../helpers'
 
 const { RangePicker } = DatePicker
 
@@ -96,7 +96,7 @@ export const EventCard: FC<EventCardProps> = ({ event }) => {
   }
 
   const onTimeChange = (time: Dayjs | null, formattedTime: string) => {
-    if (time && formattedTime !== '00:00:00') void setFieldValue('reminder', time.valueOf())
+    if (time && formattedTime !== EMPTY_TYME) void setFieldValue('reminder', time.valueOf())
   }
 
   return (

@@ -16,3 +16,5 @@ export const MONTH_MODE: CalendarMode = 'month'
 export const YEAR_MODE: CalendarMode = 'year'
 
 export const EVENTS_PER_PAGE = 10
+
+export const EMPTY_TYME = '00:00:00'

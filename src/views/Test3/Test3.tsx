@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CalendarQueries } from 'api'
 import { useModal } from 'hooks/useModal'
+import Pusher from 'pusher-js'
+import toast from 'react-hot-toast'
 import { Button, Calendar, ConfigProvider } from 'antd'
 import { Box, WrappedBox } from 'components/Box'
 import { Loader } from 'components/Loader'
@@ -13,7 +15,8 @@ import locale from 'antd/locale/ru_RU'
 import { errorToastWithButton } from 'utils/errorToastWithButton'
 import { EventDto } from 'types/api'
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar'
-import { dateFormatter } from './utils'
+import { PUSHER_SECRET_KEY } from 'config/pusher'
+import { dateFormatter, timeFormatter } from './utils'
 import { MONTH_MODE, YEAR_MODE } from './helpers'
 
 export const Test3 = () => {
@@ -71,6 +74,29 @@ export const Test3 = () => {
     setSelectedEvents(() => events)
     openEventModal()
   }
+
+  useEffect(() => {
+    const pusher = new Pusher(PUSHER_SECRET_KEY, {
+      cluster: 'eu',
+    })
+
+    try {
+      const channel = pusher.subscribe('calendar-notifications')
+      channel.bind('reminder-event', ({ title, start_date, end_date }: EventDto) => {
+        toast(
+          `У вас запланированно "${title}" c ${timeFormatter(start_date)} до ${timeFormatter(
+            end_date,
+          )}`,
+          {
+            position: 'top-right',
+            duration: 6000,
+          },
+        )
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
 
   if (isCalendarEventsLoading)
     return (
