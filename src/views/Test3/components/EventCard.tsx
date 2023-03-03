@@ -143,7 +143,10 @@ export const EventCard: FC<EventCardProps> = ({ event }) => {
           />
         </Box>
       </Box>
-      <Box alignItems='end'>
+      <Box flexDirection='row' justifyContent='end'>
+        <Button style={{ width: 120, marginRight: 15 }} onClick={() => navigate('/test3')}>
+          Отмена
+        </Button>
         <Button
           type='primary'
           style={{ width: 120 }}
