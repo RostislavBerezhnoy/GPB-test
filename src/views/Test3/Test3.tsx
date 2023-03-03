@@ -63,15 +63,13 @@ export const Test3 = () => {
   }
 
   const eventshHendler = (value: Dayjs) => {
-    if (calendarMode === MONTH_MODE) {
-      const events = getEventsListByDate(value)
-      setSelectedEvents(() => events)
-      openEventModal()
-    } else if (calendarMode === YEAR_MODE) {
-      const events = getMounthEventsListByDate(value)
-      setSelectedEvents(() => events)
-      openEventModal()
-    }
+    const events =
+      (calendarMode === MONTH_MODE && getEventsListByDate(value)) ||
+      (calendarMode === YEAR_MODE && getMounthEventsListByDate(value)) ||
+      []
+
+    setSelectedEvents(() => events)
+    openEventModal()
   }
 
   if (isCalendarEventsLoading)
