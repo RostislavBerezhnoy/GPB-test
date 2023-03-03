@@ -20,6 +20,9 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
     "@types/node": "15.0.0",
     "@types/react": "18.0.21",
     "@types/react-dom": "^18.0.6",
@@ -41,6 +44,7 @@
     "eslint-plugin-sonarjs": "^0.11.0",
     "eslint-plugin-unicorn": "^40.1.0",
     "prettier": "^2.5.1",
+    "react-app-polyfill": "^3.0.0",
     "webpack": "^5.74.0"
   },
   "scripts": {
@@ -63,7 +67,7 @@
       "not op_mini all"
     ],
     "development": [
-      "ie 9",
+      "ie 11",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
