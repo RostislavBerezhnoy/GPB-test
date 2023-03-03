@@ -14,3 +14,5 @@ export const validationSchema = Yup.object({
 
 export const MONTH_MODE: CalendarMode = 'month'
 export const YEAR_MODE: CalendarMode = 'year'
+
+export const EVENTS_PER_PAGE = 10

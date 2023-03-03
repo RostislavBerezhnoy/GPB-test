@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { CalendarQueries } from 'api'
 import { useFormik } from 'formik'
 import toast from 'react-hot-toast'
@@ -16,6 +17,7 @@ export type EventCardProps = {
 }
 
 export const EventCard: FC<EventCardProps> = ({ event }) => {
+  const navigate = useNavigate()
   const { useCreateCalendarEventMutation, useUpdateCalendarEventMutation } = CalendarQueries
 
   const [
@@ -37,8 +39,11 @@ export const EventCard: FC<EventCardProps> = ({ event }) => {
   ] = useUpdateCalendarEventMutation()
 
   useEffect(() => {
-    if (isCreateEventSuccess) toast.success('Новое событие успешно создано!')
-  }, [isCreateEventSuccess])
+    if (isCreateEventSuccess) {
+      toast.success('Новое событие успешно создано!')
+      navigate('/test3')
+    }
+  }, [isCreateEventSuccess, navigate])
 
   useEffect(() => {
     if (isCreateEventError) toast.error('Не удалось создать новое событие!')
