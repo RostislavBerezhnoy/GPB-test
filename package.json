@@ -11,6 +11,7 @@
     "formik": "^2.2.9",
     "pusher-js": "^8.0.1",
     "react": "^18.2.0",
+    "react-app-polyfill": "^3.0.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-redux": "^8.0.5",
@@ -44,7 +45,6 @@
     "eslint-plugin-sonarjs": "^0.11.0",
     "eslint-plugin-unicorn": "^40.1.0",
     "prettier": "^2.5.1",
-    "react-app-polyfill": "^3.0.0",
     "webpack": "^5.74.0"
   },
   "scripts": {

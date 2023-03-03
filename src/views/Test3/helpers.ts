@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import * as Yup from 'yup'
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar'
 
+export const DATE_FORMAT = 'YYYY-MM-DD'
 export const DATETIME_FORMAT = 'YYYY-MM-DDTHH:mm:ssZ[Z]'
 export const defaultDateRangeValue = dayjs('00:00:00', 'HH:mm:ss')
 

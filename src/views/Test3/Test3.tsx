@@ -17,7 +17,7 @@ import { EventDto } from 'types/api'
 import type { CalendarMode } from 'antd/es/calendar/generateCalendar'
 import { PUSHER_SECRET_KEY } from 'config/pusher'
 import { dateFormatter, timeFormatter, validateDateBetweenTwoDates } from './utils'
-import { MONTH_MODE, YEAR_MODE } from './helpers'
+import { MONTH_MODE, YEAR_MODE, DATE_FORMAT } from './helpers'
 
 export const Test3 = () => {
   const {
@@ -52,7 +52,7 @@ export const Test3 = () => {
 
   const getMounthEventsListByDate = (date: Dayjs): EventDto[] =>
     calendarEvents.filter(
-      ({ start_date }) => dayjs(start_date, 'YYYY-MM-DD').month() === date.month(),
+      ({ start_date }) => dayjs(start_date, DATE_FORMAT).month() === date.month(),
     )
 
   const monthCellRender = (value: Dayjs) => {
